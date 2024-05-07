@@ -1,0 +1,55 @@
+
+
+const grupoGrama = ["bulbasaur","venusaur","ivysaur"]
+const grupoFogo = ["charmander","charmeleon","charizard"]
+
+
+
+function carregarPokemons(){}
+
+    fetch("https://pokeapi.co/api/v2/pokemon/")
+      .then(function response(data){
+
+        const promiseData = data.json()
+       
+        promiseData.then(response =>{
+
+            const resultado=response.results
+console.log(resultado)
+          
+        
+          for(let index = 0 ; index  < resultado.length; index ++){
+            resultado[index].imagem = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/" + (index + 1) +".png"
+
+            adicionarCardPokemon(resultado[index])
+          
+  }})
+      
+})
+
+function adicionarCardPokemon(pokemon){
+
+    const divCardElemento = document.createElement("div")
+    divCardElemento.classList.add("card")
+
+    const imagemElemento = document.createElement("img")
+    imagemElemento.setAttribute("src", pokemon.imagem)
+    imagemElemento.style.width="90%"
+
+    const textoElemento = document.createElement("h1")
+    textoElemento.innerHTML = pokemon.name
+
+    if(grupoGrama.includes(pokemon.name)){
+        textoElemento.classList.add("grama")
+    } else if(grupoFogo.includes(pokemon.name)){
+        textoElemento.classList.add("fogo")
+    }
+   
+    const divElemento = document.getElementById("conteudo-pokemon")
+
+    divCardElemento.appendChild(imagemElemento)
+    divCardElemento.appendChild(textoElemento)
+
+    divElemento.appendChild(divCardElemento)
+
+}
